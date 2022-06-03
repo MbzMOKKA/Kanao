@@ -323,102 +323,14 @@ function LoadShoppingCart(){
 
 //Affichage d'un article du panier
 function ShoppingCartArticleDisplay(_product_info,_article_obj,_local_storage_index){
-    /*
-    let _article_dom = CreateDomElement("article");
-    DomElementSetClass(_article_dom, "cart__item");
-    _article_dom.setAttribute("data-id",_article_obj.pid);
-    _article_dom.setAttribute("data-color",_article_obj.color);
-
-    _article_dom.innerHTML = `
-        <div class="cart__item__img">
-            <img src="`+_product_info.imageUrl+`" alt="`+_product_info.altTxt+`, `+_product_info.name+`">
-        </div>
-        <div class="cart__item__content">
-            <div class="cart__item__content__description">
-                <h2>`+_product_info.name+`</h2>
-                <p>`+GetColorName(_article_obj.color)+`</p>
-                <p class="item__price" data-price="`+String(_product_info.price)+`">`+String((_product_info.price).toFixed(2)).replace(".",",")+` €</p>
-            </div>
-            <div class="cart__item__content__settings">
-                <div class="cart__item__content__settings__quantity">
-                    <p>Qté : </p>
-                    <input type="number" onchange="CartReactToQttChange();" class="itemQuantity" name="itemQuantity" min="1" max="100" value="`+_article_obj.quantity+`">
-                </div>
-                <div class="cart__item__content__settings__delete">
-                    <p class="deleteItem" onclick="DeleteArticleFromCart();">Supprimer</p>
-                </div>
-            </div>
-        </div>
-    `;
-    let _article_list_dom = document.getElementById("cart__items");
-    _article_list_dom.appendChild(_article_dom);
-    */
     //article
-    let _article_dom = CreateDomElement("article");
-    DomElementSetClass(_article_dom, "cart__item");
-        //conteneur de l'image de l'article
-        let _article_image_container = CreateDomElement("div");
-        DomElementSetClass(_article_image_container, "cart__item__img");
-            //image de l'article
-            let _article_img = CreateDomImage(_product_info.imageUrl, _product_info.altTxt+", "+_product_info.name);
-        _article_image_container.appendChild(_article_img);
-        //infos de l'article
-        let _article_infos = CreateDomElement("div");
-        DomElementSetClass(_article_infos, "cart__item__content");
-            //infos du produit
-            let _article_description = CreateDomElement("div");
-            DomElementSetClass(_article_description, "cart__item__content__description");
-                //nom
-                let _article_name = CreateDomElement("h2");
-                DomElementSetText(_article_name, _product_info.name);
-                //couleur
-                let _article_color = CreateDomElement("p");
-                DomElementSetText(_article_color, GetColorName(_article_obj.color));
-                //prix
-                let _article_price = CreateDomElement("p");
-                DomElementSetClass(_article_price, "item__price");
-                _article_price.setAttribute("data-price", String(_product_info.price));
-                DomElementSetText(_article_price, String((_product_info.price).toFixed(2)).replace(".",",")+" €");
-            _article_description.appendChild(_article_name);
-            _article_description.appendChild(_article_color);
-            _article_description.appendChild(_article_price);
-            //paramètre de l'article
-            let _article_settings = CreateDomElement("div");
-            DomElementSetClass(_article_settings, "cart__item__content__settings");
-                //quantitée
-                let _article_qtt = CreateDomElement("div");
-                DomElementSetClass(_article_qtt, "cart__item__content__settings__quantity");
-                    //"Qté"
-                    let _article_qtt_word = CreateDomElement("p");
-                    DomElementSetText(_article_qtt_word, "Qté :");
-                    //input
-                    let _article_qtt_input = CreateDomElement("input");
-                    DomElementSetClass(_article_qtt_input, "itemQuantity");
-                    _article_qtt_input.setAttribute("type", "number");
-                    _article_qtt_input.addEventListener("change",CartReactToQttChange);
-                    _article_qtt_input.setAttribute("name", "itemQuantity");
-                    _article_qtt_input.setAttribute("min", "1");
-                    _article_qtt_input.setAttribute("max", "100");
-                    _article_qtt_input.setAttribute("value", String(_article_obj.quantity));
-                _article_qtt.appendChild(_article_qtt_word);
-                _article_qtt.appendChild(_article_qtt_input);
-                //supprimer
-                let _article_delete = CreateDomElement("div");
-                DomElementSetClass(_article_delete, "cart__item__content__settings__delete");
-                    //bouton supprimer
-                    let _article_delete_button = CreateDomElement("p");
-                    DomElementSetClass(_article_delete_button, "deleteItem");
-                    _article_delete_button.addEventListener("click",DeleteArticleFromCart);
-                    DomElementSetText(_article_delete_button, "Supprimer");
-                _article_delete.appendChild(_article_delete_button);
-            _article_settings.appendChild(_article_qtt);
-            _article_settings.appendChild(_article_delete);
-        _article_infos.appendChild(_article_description);
-        _article_infos.appendChild(_article_settings);
+    let _article_dom = CreateDomElement("article", null, "cart__item");
     _article_dom.setAttribute("data-id",_article_obj.pid);
     _article_dom.setAttribute("data-color",_article_obj.color);
-    _article_dom.appendChild(_article_image_container);
-    _article_dom.appendChild(_article_infos);           
+        //conteneur de l'image de l'article
+        CartItemDisplayImgContainer(_article_dom, _product_info);
+        //infos de l'article
+        CartItemDisplayInfos(_article_dom, _article_obj, _product_info);     
     //ajout de l'article a la liste
     let _article_list_dom = document.getElementById("cart__items");
     _article_list_dom.appendChild(_article_dom);
