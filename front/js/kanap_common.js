@@ -41,8 +41,8 @@ function CheckIfArticleIsValid(_product_id,_product_color,_product_qtt){
         console.error("Erreur : Aucune couleur n'a été choisit !");
         return false;
     }
-    if(!(_product_qtt>=1 && _product_qtt<=100)){
-        window.alert("Veuillez choisir un nombre d'article en 1 et 100 !");
+    if(!(_product_qtt>=1 && _product_qtt<=100) || _product_qtt % 1 !== 0){
+        window.alert("Veuillez choisir un nombre d'article entier entre 1 et 100 !");
         console.error("Erreur : La quantité n'est pas valide !");
         return false;
     }

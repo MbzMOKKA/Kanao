@@ -218,6 +218,11 @@ function ContactCheckEmail(_email){
 //Vérification panier valide
 function CheckOrderCartContent(){
     if(shopping_cart_content.length>0){
+        for(let _article of shopping_cart_content){
+            if(CheckIfArticleIsValid(_article.pid,_article.color,_article.quantity)==false){
+                return false;
+            }
+        }
         return true;
     }else{
         console.error("Erreur : Panier vide");
@@ -282,10 +287,14 @@ function GetCartArticleAmount(){
 
 //Récupération du prix total du panier
 function GetCartPrice(){
-    let _DOM_items = document.getElementsByClassName("item__price");
+    let _DOM_items = document.getElementsByClassName("cart__item__content");
     let _total_price = 0;
     for(let _i=0; _i<_DOM_items.length; _i++){
-        _total_price+=Number(_DOM_items[_i].dataset.price)*Number(shopping_cart_content[_i].quantity);
+        let _DOM_price = _DOM_items[_i].getElementsByClassName("item__price");
+        let _price = Number(_DOM_price[0].dataset.price);
+        let _DOM_qtt = _DOM_items[_i].getElementsByClassName("itemQuantity");
+        let _qtt = Number(_DOM_qtt[0].value);
+        _total_price+=_price*_qtt;
     }
     return _total_price;
 }
