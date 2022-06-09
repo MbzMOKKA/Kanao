@@ -27,35 +27,6 @@ function SendOrderToBackend(_order_obj){
 }
 
 
-//################################ Modification de données ################################
-
-
-//Suppression d'un article du panier
-function DeleteArticleFromCart(){
-    let _DOM_item = event.target.closest("article");
-    let _cart_item_index = GetArticleIndexFromDOMitem(_DOM_item);
-    //Retrait de l'array et du local storage
-    shopping_cart_content.splice(_cart_item_index,1);
-    SaveShoppingCartToLocalStorage();
-    //Mise à jour du DOM
-    document.getElementById("cart__items").removeChild(_DOM_item);
-    ShoppingCartTotalDisplay();
-}
-
-//Modification de la quantitée depuis le panier
-function CartReactToQttChange(){
-    let _article_obj = shopping_cart_content[GetArticleIndexFromDOMitem(event.target.closest("article"))];
-    let _new_qtt = event.target.value;
-    if(CheckIfArticleIsValid(_article_obj.pid,_article_obj.color,_new_qtt)){
-        _article_obj.quantity = _new_qtt;
-        SaveShoppingCartToLocalStorage();
-        ShoppingCartTotalDisplay();
-    }else{
-        event.target.value = _article_obj.quantity;
-    }
-}
-
-
 //################################ Traitement de données ################################
 
 
@@ -374,6 +345,31 @@ function CartCommand(){
     }
     //On empêche la page de se recharger après avoir appuyé sur le bouton commander
     event.preventDefault();
+}
+
+//Modification de la quantitée depuis le panier
+function CartReactToQttChange(){
+    let _article_obj = shopping_cart_content[GetArticleIndexFromDOMitem(event.target.closest("article"))];
+    let _new_qtt = event.target.value;
+    if(CheckIfArticleIsValid(_article_obj.pid,_article_obj.color,_new_qtt)){
+        _article_obj.quantity = _new_qtt;
+        SaveShoppingCartToLocalStorage();
+        ShoppingCartTotalDisplay();
+    }else{
+        event.target.value = _article_obj.quantity;
+    }
+}
+
+//Suppression d'un article du panier
+function DeleteArticleFromCart(){
+    let _DOM_item = event.target.closest("article");
+    let _cart_item_index = GetArticleIndexFromDOMitem(_DOM_item);
+    //Retrait de l'array et du local storage
+    shopping_cart_content.splice(_cart_item_index,1);
+    SaveShoppingCartToLocalStorage();
+    //Mise à jour du DOM
+    document.getElementById("cart__items").removeChild(_DOM_item);
+    ShoppingCartTotalDisplay();
 }
 
 
