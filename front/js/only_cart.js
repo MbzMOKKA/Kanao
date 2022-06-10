@@ -74,7 +74,7 @@ function ContactCheckFirstName(_first_name){
     }
     let _error_DOM = document.getElementById("firstNameErrorMsg");
     if(_first_name.length>0){//le champ n'est pas vide
-        let _check_regex = /[^a-zA-Z\- éèà]/;//contien uniquement lettre min, maj, é, è, à, espace et tiret du milieu
+        let _check_regex = /[^a-zA-Z\- éèà]/;//renvoie null si ne contien que lettres min, maj, é, è, à, espace et tiret du milieu
         if(_first_name.match(_check_regex)==null){
             DomElementSetText(_error_DOM, "");
             return true;
@@ -146,7 +146,7 @@ function ContactCheckCity(_city){
     }
     let _error_DOM = document.getElementById("cityErrorMsg");
     if(_city.length>0){//le champ n'est pas vide
-        let _check_regex = /[\d@]/;//renvoie null si ne contien pas de chiffre ou de @
+        let _check_regex = /[\d]/;//renvoie null si ne contien pas de chiffre
         if(_city.match(_check_regex)==null){
             DomElementSetText(_error_DOM, "");
             return true;
